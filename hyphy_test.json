@@ -1,0 +1,16 @@
+{
+    "job": {
+        "name": "hyphy_test",
+        "ntasks": 1,
+        "nodes": 1,
+        "current_working_directory": "/root",
+        "standard_input": "/dev/null",
+        "standard_output": "/root/hyphy_test.out",
+        "standard_error": "/root/hyphy_test_error.out",
+        "environment": {
+            "PATH": "/bin:/usr/bin/:/usr/local/bin/",
+            "LD_LIBRARY_PATH": "/lib/:/lib64/:/usr/local/lib"
+        }
+    },
+    "script": "#!/bin/bash\n hyphy --version"
+}

@@ -1,4 +1,9 @@
+FROM quay.io/biocontainers/hyphy:2.5.65--he91c24d_1 as builder
+
 FROM rockylinux:8
+
+COPY --from=builder /usr/local/bin/HYPHYMPI /usr/bin
+COPY --from=builder /usr/local/bin/hyphy /usr/bin
 
 LABEL org.opencontainers.image.source="https://github.com/giovtorres/slurm-docker-cluster" \
     org.opencontainers.image.title="slurm-docker-cluster" \
