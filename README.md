@@ -1,4 +1,4 @@
-# Slurm REST Docker Cluster
+# Slurm REST Docker Cluster with HyPhy
 
 # Table of contents
 
@@ -9,9 +9,11 @@
 
 # Introduction
 
-[This is a fork of the SLURM Docker repo here.](https://github.com/giovtorres/slurm-docker-cluster)
+[This is a fork of the SLURM REST Docker repo here.](https://github.com/JBris/slurm-rest-api-docker)
 
-[The principal difference is that the dependencies required for the SLURM REST API have been included in the image build.](https://slurm.schedmd.com/rest.html)
+[Which is in turn a fork of the SLURM Docker repo here.](https://github.com/giovtorres/slurm-docker-cluster)
+
+[The principal difference is that the dependencies required for HyPhy have been included in the image build.](https://github.com/veg/hyphy)
 
 # REST API
 
