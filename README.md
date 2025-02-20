@@ -1,5 +1,7 @@
 # Slurm REST Docker Cluster with HyPhy
 
+The idea currently is that this is useful to develop against. If we want to put this image into production, it probably means investigating Docker Swarm or something. But either way, this repo should prove very useful for anyone attempting local development of the backend of datamonkey3.
+
 # Table of contents
 
 - [Slurm REST Docker Cluster](#slurm-rest-docker-cluster)
