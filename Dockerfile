@@ -4,6 +4,7 @@ FROM rockylinux:8
 
 COPY --from=builder /usr/local/bin/HYPHYMPI /usr/bin
 COPY --from=builder /usr/local/bin/hyphy /usr/bin
+COPY --from=builder /usr/local/share/hyphy /usr/local/share/hyphy
 
 LABEL org.opencontainers.image.source="https://github.com/giovtorres/slurm-docker-cluster" \
     org.opencontainers.image.title="slurm-docker-cluster" \
