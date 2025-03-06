@@ -22,10 +22,14 @@ services:
     command: [ "slurmdbd" ]
     container_name: slurmdbd
     hostname: slurmdbd
+    environment:
+      JWT_KEY_PATH: ${JWT_KEY_PATH:-/var/spool/slurm/statesave/jwt_hs256.key}
+      EXTERNAL_JWT_KEY_PATH: ${EXTERNAL_JWT_KEY_PATH:-}
     volumes:
       - etc_munge:/etc/munge
       - etc_slurm:/etc/slurm
       - var_log_slurm:/var/log/slurm
+      - ${JWT_KEY_VOLUME:-}
     expose:
       - "6819"
     depends_on:
@@ -36,11 +40,15 @@ services:
     command: [ "slurmctld" ]
     container_name: slurmctld
     hostname: slurmctld
+    environment:
+      JWT_KEY_PATH: ${JWT_KEY_PATH:-/var/spool/slurm/statesave/jwt_hs256.key}
+      EXTERNAL_JWT_KEY_PATH: ${EXTERNAL_JWT_KEY_PATH:-}
     volumes:
       - etc_munge:/etc/munge
       - etc_slurm:/etc/slurm
       - slurm_jobdir:/data
       - var_log_slurm:/var/log/slurm
+      - ${JWT_KEY_VOLUME:-}
     expose:
       - "6817"
     depends_on:
@@ -51,11 +59,15 @@ services:
     command: [ "slurmd" ]
     hostname: c1
     container_name: c1
+    environment:
+      JWT_KEY_PATH: ${JWT_KEY_PATH:-/var/spool/slurm/statesave/jwt_hs256.key}
+      EXTERNAL_JWT_KEY_PATH: ${EXTERNAL_JWT_KEY_PATH:-}
     volumes:
       - etc_munge:/etc/munge
       - etc_slurm:/etc/slurm
       - slurm_jobdir:/data
       - var_log_slurm:/var/log/slurm
+      - ${JWT_KEY_VOLUME:-}
     expose:
       - "6818"
     depends_on:
@@ -67,11 +79,15 @@ services:
     command: [ "/usr/share/bin/slurmrestd.sh" ]
     hostname: c2
     container_name: c2
+    environment:
+      JWT_KEY_PATH: ${JWT_KEY_PATH:-/var/spool/slurm/statesave/jwt_hs256.key}
+      EXTERNAL_JWT_KEY_PATH: ${EXTERNAL_JWT_KEY_PATH:-}
     volumes:
       - etc_munge:/etc/munge
       - etc_slurm:/etc/slurm
       - slurm_jobdir:/data
       - var_log_slurm:/var/log/slurm
+      - ${JWT_KEY_VOLUME:-}
     expose:
       - "6818"
       - "9200"

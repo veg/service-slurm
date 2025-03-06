@@ -8,6 +8,8 @@ The idea currently is that this is useful to develop against. If we want to put 
 - [Table of contents](#table-of-contents)
 - [Introduction](#introduction)
 - [REST API](#rest-api)
+- [JWT Authentication](#jwt-authentication)
+- [Using Custom JWT Keys](#using-custom-jwt-keys)
 
 # Introduction
 
@@ -26,3 +28,33 @@ The idea currently is that this is useful to develop against. If we want to put 
 5. Check that the SLURM job completed successfully: `docker compose exec c1 cat /root/test.out`
 6. Submit a job to test HyPhy installation: `curl -X POST "http://localhost:9200/slurm/v0.0.37/job/submit" -H "X-SLURM-USER-NAME:root" -H "X-SLURM-USER-TOKEN:${SLURM_JWT}" -H "Content-Type: application/json" -d @hyphy_test.json`
 7. Check the HyPhy version reported successfully: `docker compose exec c1 cat /root/hyphy_test.out`
+
+# JWT Authentication
+
+The Slurm REST API uses JWT (JSON Web Token) authentication. By default, the container generates a random JWT key during startup. This key is used to sign and verify JWTs for authentication.
+
+# Using Custom JWT Keys
+
+For production environments or when you need consistent authentication across container restarts, you can provide your own JWT key.
+
+## Generating a JWT Key
+
+We provide a helper script to generate a compliant JWT key:
+
+```bash
+# Generate a key with default settings
+./generate-jwt-key.sh
+
+# Generate a key with custom output location
+./generate-jwt-key.sh --dir /path/to/keys --output my_jwt_key
+```
+
+The script will generate a 256-bit key. Be sure to set the necessary environment variables. See below.
+
+## Environment Variables
+
+- `JWT_KEY_PATH`: Path inside the container where the JWT key should be stored (default: `/var/spool/slurm/statesave/jwt_hs256.key`)
+- `EXTERNAL_JWT_KEY_PATH`: Path to an external JWT key that will be copied to `JWT_KEY_PATH`
+- `JWT_KEY_VOLUME`: Volume mount for the external JWT key. Format: /path/to/local/key:[EXTERNAL_JWT_KEY_PATH]:ro
+
+A sample `.env.example` file is provided as a template for your environment variables.

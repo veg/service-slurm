@@ -148,13 +148,16 @@ RUN set -x \
     && usermod -a -G slurm rest
 
 RUN mkdir -p /var/spool/slurm/statesave \
-    && dd if=/dev/random of=/var/spool/slurm/statesave/jwt_hs256.key bs=32 count=1 \
-    && chown slurm:slurm /var/spool/slurm/statesave/jwt_hs256.key \
-    && chmod 0600 /var/spool/slurm/statesave/jwt_hs256.key \
     && chown slurm:slurm /var/spool/slurm/statesave \
     && chmod 0755 /var/spool/slurm/statesave 
 
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh 
+ENV JWT_KEY_PATH=/var/spool/slurm/statesave/jwt_hs256.key
+
+COPY setup-jwt-key.sh /usr/local/bin/setup-jwt-key.sh
+RUN chmod +x /usr/local/bin/setup-jwt-key.sh
+
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 

@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+# Setup JWT key before starting services
+echo "DEBUG: About to run setup-jwt-key.sh"
+bash -x /usr/local/bin/setup-jwt-key.sh
+echo "DEBUG: Finished running setup-jwt-key.sh"
+echo "DEBUG: Checking if key exists at $JWT_KEY_PATH"
+ls -la $JWT_KEY_PATH 2>/dev/null || echo "Key file not found at $JWT_KEY_PATH"
+
 if [ "$1" = "slurmdbd" ]
 then
     echo "---> Starting the MUNGE Authentication service (munged) ..."
