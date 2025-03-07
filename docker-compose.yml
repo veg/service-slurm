@@ -24,7 +24,6 @@ services:
     hostname: slurmdbd
     environment:
       JWT_KEY_PATH: ${JWT_KEY_PATH:-/var/spool/slurm/statesave/jwt_hs256.key}
-      EXTERNAL_JWT_KEY_PATH: ${EXTERNAL_JWT_KEY_PATH:-}
     volumes:
       - etc_munge:/etc/munge
       - etc_slurm:/etc/slurm
@@ -42,7 +41,6 @@ services:
     hostname: slurmctld
     environment:
       JWT_KEY_PATH: ${JWT_KEY_PATH:-/var/spool/slurm/statesave/jwt_hs256.key}
-      EXTERNAL_JWT_KEY_PATH: ${EXTERNAL_JWT_KEY_PATH:-}
     volumes:
       - etc_munge:/etc/munge
       - etc_slurm:/etc/slurm
@@ -61,7 +59,6 @@ services:
     container_name: c1
     environment:
       JWT_KEY_PATH: ${JWT_KEY_PATH:-/var/spool/slurm/statesave/jwt_hs256.key}
-      EXTERNAL_JWT_KEY_PATH: ${EXTERNAL_JWT_KEY_PATH:-}
     volumes:
       - etc_munge:/etc/munge
       - etc_slurm:/etc/slurm
@@ -81,7 +78,6 @@ services:
     container_name: c2
     environment:
       JWT_KEY_PATH: ${JWT_KEY_PATH:-/var/spool/slurm/statesave/jwt_hs256.key}
-      EXTERNAL_JWT_KEY_PATH: ${EXTERNAL_JWT_KEY_PATH:-}
     volumes:
       - etc_munge:/etc/munge
       - etc_slurm:/etc/slurm
