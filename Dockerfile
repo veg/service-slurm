@@ -41,6 +41,8 @@ RUN set -ex \
     vim-enhanced \
     http-parser-devel \
     json-c-devel \
+    openssh-server \
+    openssh-clients \
     && yum clean all \
     && rm -rf /var/cache/yum
 
@@ -136,7 +138,10 @@ COPY slurm.conf /etc/slurm/slurm.conf
 
 COPY slurmdbd.conf /etc/slurm/slurmdbd.conf
 
-COPY slurmrestd.sh /usr/share/bin/slurmrestd.sh
+COPY bin/slurmrestd.sh /usr/share/bin/slurmrestd.sh
+COPY bin/slurm-interface.sh /usr/share/bin/slurm-interface.sh
+COPY bin/setup-ssh.sh /usr/share/bin/setup-ssh.sh
+COPY sshd_config /etc/ssh/sshd_config
 
 RUN set -x \
     && chown slurm:slurm /etc/slurm/slurmdbd.conf \
@@ -145,6 +150,10 @@ RUN set -x \
     && chmod 0755 /etc/slurm/slurm.conf \
     && chown slurm:slurm /usr/share/bin/slurmrestd.sh \
     && chmod 0755 /usr/share/bin/slurmrestd.sh \
+    && chown slurm:slurm /usr/share/bin/slurm-interface.sh \
+    && chmod 0755 /usr/share/bin/slurm-interface.sh \
+    && chown root:root /usr/share/bin/setup-ssh.sh \
+    && chmod 0755 /usr/share/bin/setup-ssh.sh \
     && usermod -a -G slurm rest
 
 RUN mkdir -p /var/spool/slurm/statesave \
@@ -153,10 +162,10 @@ RUN mkdir -p /var/spool/slurm/statesave \
 
 ENV JWT_KEY_PATH=/var/spool/slurm/statesave/jwt_hs256.key
 
-COPY setup-jwt-key.sh /usr/local/bin/setup-jwt-key.sh
+COPY bin/setup-jwt-key.sh /usr/local/bin/setup-jwt-key.sh
 RUN chmod +x /usr/local/bin/setup-jwt-key.sh
 
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

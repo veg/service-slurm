@@ -73,11 +73,13 @@ services:
   c2:
     image: slurm-docker-cluster:${IMAGE_TAG:-21.08}
     entrypoint: [ "sh", "-c" ]
-    command: [ "/usr/share/bin/slurmrestd.sh" ]
+    command: [ "/usr/share/bin/slurm-interface.sh" ]
     hostname: c2
     container_name: c2
+    privileged: true
     environment:
       JWT_KEY_PATH: ${JWT_KEY_PATH:-/var/spool/slurm/statesave/jwt_hs256.key}
+      SLURM_INTERFACE: ${SLURM_INTERFACE:-rest}
     volumes:
       - etc_munge:/etc/munge
       - etc_slurm:/etc/slurm
@@ -87,8 +89,10 @@ services:
     expose:
       - "6818"
       - "9200"
+      - "22"
     ports:
       - 9200:9200
+      - ${SSH_PORT:-2222}:22
     depends_on:
       - "c1"
 
