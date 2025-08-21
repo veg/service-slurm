@@ -113,10 +113,10 @@ We provide a helper script to generate a compliant JWT key:
 
 ```bash
 # Generate a key with default settings
-./generate-jwt-key.sh
+./bin/generate-jwt-key.sh
 
 # Generate a key with custom output location
-./generate-jwt-key.sh --dir /path/to/keys --output my_jwt_key
+./bin/generate-jwt-key.sh --dir /path/to/keys --output my_jwt_key
 ```
 
 The script will generate a 256-bit key. Be sure to set the necessary environment variables. See below.
