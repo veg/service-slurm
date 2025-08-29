@@ -21,8 +21,6 @@ sacctmgr -i add user rest account=rest
 if [ "${SLURM_INTERFACE}" = "rest" ] || [ -z "${SLURM_INTERFACE}" ]; then
     echo "-- Starting Slurm in REST API mode"
 
-    export SLURMRESTD_SECURITY=disable_unshare_files,disable_unshare_sysv
-
     # Start slurmrestd
     SLURM_JWT=daemon SLURMRESTD_DEBUG=5 exec gosu rest /usr/sbin/slurmrestd 0.0.0.0:9200
 else

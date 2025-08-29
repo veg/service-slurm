@@ -11,11 +11,11 @@ build:
 
 .PHONY: start
 start:
-	@docker-compose up -d
+	@docker compose up -d
 
 .PHONY: stop
 stop:
-	@docker-compose down
+	@docker compose down
 
 # Mode switching targets
 .PHONY: start-rest
@@ -42,7 +42,7 @@ ssh:
 
 .PHONY: logs
 logs:
-	@docker-compose logs -f
+	@docker compose logs -f
 
 .PHONY: help
 help:

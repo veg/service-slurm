@@ -19,7 +19,7 @@ fi
 
 # Stop any running containers
 echo "Stopping any running containers..."
-docker-compose down 2>/dev/null
+docker compose down 2>/dev/null
 
 # Update SLURM_INTERFACE in .env without overwriting the file
 echo "Setting SLURM_INTERFACE=$MODE in .env..."
@@ -27,7 +27,7 @@ sed -i "s/^SLURM_INTERFACE=.*/SLURM_INTERFACE=$MODE/" .env
 
 # Start containers using docker-compose
 echo "Starting containers in $MODE mode..."
-docker-compose up -d
+docker compose up -d
 
 if [ "$MODE" = "rest" ]; then
     echo "REST mode activated. Service is accessible at http://localhost:9200"
